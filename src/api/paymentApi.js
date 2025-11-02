@@ -55,3 +55,19 @@ export const deletePayment = async (id, token) => {
   if (!res.ok) throw new Error(data.message || "Failed to delete payment");
   return data;
 };
+
+export const capturePaypalPayment = async (orderID, token) => {
+    const res = await fetch(`${API_BASE_URL}/capture-payment`, {
+      method: "POST",
+      headers: {
+      "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ orderID: orderID }),
+    });
+    
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "PayPal capture failed");
+    return data; // { message: "Payment successful", payment: {...} }
+
+};
