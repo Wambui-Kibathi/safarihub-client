@@ -1,7 +1,8 @@
+// src/api/authApi.js
 import { API_BASE_URL } from "./config";
 
-// Register a new user
-export const register = async (data) => {
+/** 🔹 Register a new user */
+export const registerUser = async (data) => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
       method: "POST",
@@ -12,7 +13,6 @@ export const register = async (data) => {
     });
 
     const result = await res.json();
-
     if (!res.ok) throw new Error(result.message || "Registration failed");
     return result;
   } catch (error) {
@@ -21,8 +21,8 @@ export const register = async (data) => {
   }
 };
 
-// Login user
-export const login = async (data) => {
+/** 🔹 Login user */
+export const loginUser = async (data) => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
       method: "POST",
@@ -41,8 +41,8 @@ export const login = async (data) => {
   }
 };
 
-// Logout user
-export const logout = async (token) => {
+/** 🔹 Logout user */
+export const logoutUser = async (token) => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/logout`, {
       method: "POST",
@@ -60,8 +60,8 @@ export const logout = async (token) => {
   }
 };
 
-// Get current logged-in user
-export const getMe = async (token) => {
+/** 🔹 Get currently logged-in user */
+export const getCurrentUser = async (token) => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
       headers: {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDestinations } from "../api/destinationApi";
 import { Link } from "react-router-dom";
-import heroImage from "../assets/hero-image.jpg";
+import heroImage from "../assets/images/hero.jpg";
 
 const Home = () => {
   const [destinations, setDestinations] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { register, login } from "../api/authApi";
+import { registerUser, loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Form.css";
 import "../styles/main.css";
@@ -27,10 +27,10 @@ const Register = () => {
 
     try {
       // Register the user
-      await register(formData);
+      await registerUser(formData);
 
       // Auto-login after registration
-      const { access_token, user } = await login({
+      const { access_token, user } = await loginUser({
         email: formData.email,
         password: formData.password,
       });

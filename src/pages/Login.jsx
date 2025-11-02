@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login } from "../api/authApi";
+import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Form.css";
 import "../styles/main.css";
@@ -19,7 +19,7 @@ const Login = () => {
     setError("");
 
     try {
-      const { access_token, user } = await login(formData);
+      const { access_token, user } = await loginUser(formData);
 
       // Save auth info
       setAuth({ token: access_token, user });
