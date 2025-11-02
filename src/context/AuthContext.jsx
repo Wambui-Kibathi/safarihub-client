@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
         register,
         login,
         logout,
-        setAuth, // Expose this so components can still access it if needed
+        setAuth, 
       }}
     >
       {children}

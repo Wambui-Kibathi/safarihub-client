@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDestinations } from "../api/destinationApi";
 import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 import "../styles/main.css";
 
 const Destinations = () => {
@@ -38,9 +39,9 @@ const Destinations = () => {
             <p>{dest.description}</p>
             <p className="price">${dest.price}</p>
             {/* Booking button can link to BookingForm.jsx */}
-            <a href={`/book/${dest.id}`} className="btn">
+            <Link to={`/book/${dest.id}`} className="btn">
               Book Now
-            </a>
+            </Link>
           </div>
         ))}
       </div>
