@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { registerUser, loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Form.css";
 import "../styles/main.css";
@@ -15,7 +14,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { register } = useAuth();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,24 +25,12 @@ const Register = () => {
     setError("");
 
     try {
-      // Register the user
-      await registerUser(formData);
-
-      // Auto-login after registration
-      const { access_token, user } = await loginUser({
-        email: formData.email,
-        password: formData.password,
-      });
-
-      // Save auth info
-      setAuth({ token: access_token, user });
-      localStorage.setItem("authToken", access_token);
-      localStorage.setItem("authUser", JSON.stringify(user));
+      const { user } = await register(formData);
 
       // Redirect by role
       if (user.role === "admin") navigate("/admin/dashboard");
       else if (user.role === "guide") navigate("/guide/dashboard");
-      else navigate("/"); // traveler dashboard
+      else navigate("/"); // traveler
 
     } catch (err) {
       setError(err.message);

@@ -1,29 +1,49 @@
-// src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { loginUser, registerUser } from "../api/authApi";
 
 export const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [auth, setAuth] = useState({
+    user: null,
+    token: localStorage.getItem("authToken") || null,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Load user from localStorage on app start
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-    if (storedUser && token) {
-      setUser(JSON.parse(storedUser));
+    const storedUser = localStorage.getItem("authUser");
+    const storedToken = localStorage.getItem("authToken");
+
+    if (storedUser && storedToken) {
+      setAuth({
+        user: JSON.parse(storedUser),
+        token: storedToken,
+      });
     }
     setLoading(false);
   }, []);
 
-  /** 🔹 Register new user */
+  /* Register and auto-login */
   const register = async (userData) => {
     try {
-      const response = await registerUser(userData);
-      return response;
+      await registerUser(userData);
+
+      // Auto-login right after registration
+      const { access_token, user } = await loginUser({
+        email: userData.email,
+        password: userData.password,
+      });
+
+      // Save in state and localStorage
+      setAuth({ token: access_token, user });
+      localStorage.setItem("authToken", access_token);
+      localStorage.setItem("authUser", JSON.stringify(user));
+      setError(null);
+
+      return { access_token, user };
     } catch (err) {
       console.error("Registration failed:", err);
       setError(err.message || "Registration failed");
@@ -31,17 +51,17 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  /** 🔹 Login user */
+  /* Login */
   const login = async (credentials) => {
     try {
-      const response = await loginUser(credentials);
-      const { access_token, user } = response;
+      const { access_token, user } = await loginUser(credentials);
 
-      localStorage.setItem("token", access_token);
-      localStorage.setItem("user", JSON.stringify(user));
-      setUser(user);
+      setAuth({ token: access_token, user });
+      localStorage.setItem("authToken", access_token);
+      localStorage.setItem("authUser", JSON.stringify(user));
       setError(null);
-      return user;
+
+      return { access_token, user };
     } catch (err) {
       console.error("Login failed:", err);
       setError(err.message || "Invalid credentials");
@@ -49,33 +69,29 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  /** 🔹 Logout user */
+  /* Logout */
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("authUser");
+    setAuth({ user: null, token: null });
   };
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!auth.user;
 
   return (
     <AuthContext.Provider
       value={{
-        user,
-        isAuthenticated,
+        ...auth,
         loading,
         error,
+        isAuthenticated,
         register,
         login,
         logout,
+        setAuth, // Expose this so components can still access it if needed
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
-
-/* Custom hook for easy access */
-export const useAuth = () => {
-  return useContext(AuthContext);
 };

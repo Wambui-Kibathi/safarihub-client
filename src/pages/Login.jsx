@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { loginUser } from "../api/authApi";
 import { useAuth } from "../context/AuthContext";
 import "../styles/Form.css";
 import "../styles/main.css";
@@ -10,26 +9,22 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { login } = useAuth();
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      const { access_token, user } = await loginUser(formData);
-
-      // Save auth info
-      setAuth({ token: access_token, user });
-      localStorage.setItem("authToken", access_token);
-      localStorage.setItem("authUser", JSON.stringify(user));
+      const { user } = await login(formData);
 
       // Redirect by role
       if (user.role === "admin") navigate("/admin/dashboard");
       else if (user.role === "guide") navigate("/guide/dashboard");
-      else navigate("/"); // traveler dashboard
+      else navigate("/"); // traveler
 
     } catch (err) {
       setError(err.message);
