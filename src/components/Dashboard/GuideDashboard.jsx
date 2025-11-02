@@ -6,6 +6,7 @@ import {
   getAssignedDestinations,
   getGuideBookings
 } from "../../api/guideApi";
+import { FaUser, FaChartBar, FaMapMarkerAlt, FaCalendarAlt, FaCreditCard } from "react-icons/fa";  // Added icons
 import "../../styles/dashboard.css";
 
 const GuideDashboard = () => {
@@ -14,11 +15,19 @@ const GuideDashboard = () => {
   const [dashboard, setDashboard] = useState({});
   const [destinations, setDestinations] = useState([]);
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState("");
 
   useEffect(() => {
+    if (!auth.token) {
+      setError("Authentication required. Please log in.");
+      setLoading(false);
+      return;
+    }
+
     const fetchData = async () => {
       try {
+        setLoading(true);
         const dashData = await getGuideDashboard(auth.token);
         const profileData = await getGuideProfile(auth.token);
         const destData = await getAssignedDestinations(auth.token);
@@ -28,65 +37,96 @@ const GuideDashboard = () => {
         setProfile(profileData);
         setDestinations(destData);
         setBookings(bookingsData);
+        setError(""); 
       } catch (err) {
-        setError(err.message);
+        setError(`Failed to load data: ${err.message}. Please try again.`);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, [auth.token]);
 
+  if (loading) {
+    return (
+      <div className="guide-dashboard">
+        <div className="loading-spinner">Loading your dashboard...</div>
+      </div>
+    );
+  }
+
   return (
     <div className="guide-dashboard">
-      <h1>Guide Dashboard</h1>
+      <h1><FaUser className="icon" /> Guide Dashboard</h1>
       {error && <p className="error">{error}</p>}
 
-      <section>
-        <h2>Profile</h2>
-        <p>Name: {profile.full_name}</p>
-        <p>Email: {profile.email}</p>
-        <img src={profile.profile_pic} alt="Profile" width={100} />
+      {/* Profile Section */}
+      <section className="profile-card">
+        <h2><FaUser className="icon" /> Profile</h2>
+        <div className="profile-info">
+          <p><strong>Name:</strong> {profile.full_name || "N/A"}</p>
+          <p><strong>Email:</strong> {profile.email || "N/A"}</p>
+          {profile.profile_pic && (
+            <img src={profile.profile_pic} alt="Profile" className="profile-pic" />
+          )}
+        </div>
       </section>
 
-      <section>
-        <h2>Overview</h2>
-        <p>Total Bookings: {dashboard.total_bookings}</p>
+      {/* Overview Section */}
+      <section className="overview-card">
+        <h2><FaChartBar className="icon" /> Overview</h2>
+        <p><strong>Total Bookings:</strong> {dashboard.total_bookings || 0}</p>
       </section>
 
-      <section>
-        <h2>Assigned Destinations</h2>
-        <ul>
-          {destinations.map(d => (
-            <li key={d.id}>{d.name} ({d.country}) - ${d.price}</li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <h2>Bookings for My Destinations</h2>
-        <table className="dashboard-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Traveler ID</th>
-              <th>Destination ID</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Total Cost</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings.map(b => (
-              <tr key={b.id}>
-                <td>{b.id}</td>
-                <td>{b.traveler_id}</td>
-                <td>{b.destination_id}</td>
-                <td>{b.start_date}</td>
-                <td>{b.end_date}</td>
-                <td>{b.total_cost}</td>
-              </tr>
+      {/* Assigned Destinations Section */}
+      <section className="destinations-section">
+        <h2><FaMapMarkerAlt className="icon" /> Assigned Destinations</h2>
+        {destinations.length === 0 ? (
+          <p>No assigned destinations yet.</p>
+        ) : (
+          <ul className="destinations-list">
+            {destinations.map(d => (
+              <li key={d.id} className="destination-item">
+                <FaMapMarkerAlt className="icon-small" /> {d.name} ({d.country}) - ${d.price}
+              </li>
             ))}
-          </tbody>
-        </table>
+          </ul>
+        )}
+      </section>
+
+      {/* Bookings Section */}
+      <section className="bookings-section">
+        <h2><FaCalendarAlt className="icon" /> Bookings for My Destinations</h2>
+        {bookings.length === 0 ? (
+          <p>No bookings found for your destinations.</p>
+        ) : (
+          <div className="bookings-table-container">
+            <table className="dashboard-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Traveler ID</th>
+                  <th><FaMapMarkerAlt className="icon-small" /> Destination ID</th>
+                  <th><FaCalendarAlt className="icon-small" /> Start Date</th>
+                  <th><FaCalendarAlt className="icon-small" /> End Date</th>
+                  <th><FaCreditCard className="icon-small" /> Total Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.map(b => (
+                  <tr key={b.id}>
+                    <td>{b.id}</td>
+                    <td>{b.traveler_id}</td>
+                    <td>{b.destination_id}</td>
+                    <td>{new Date(b.start_date).toLocaleDateString()}</td>
+                    <td>{new Date(b.end_date).toLocaleDateString()}</td>
+                    <td>${b.total_cost}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </section>
     </div>
   );

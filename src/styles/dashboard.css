@@ -76,7 +76,92 @@
     padding: 8px 12px;
     font-size: 0.9rem;
 }
+
+.traveler-dashboard {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
   
+.profile-card, .bookings-section {
+    margin-bottom: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+  
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  
+.dashboard-table th, .dashboard-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+  
+.dashboard-table th {
+    background: #f4f4f4;
+}
+  
+.bookings-table-container {
+    overflow-x: auto;  /* For mobile scrolling */
+}
+  
+.loading-spinner {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+
+.guide-dashboard {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .profile-card, .overview-card, .destinations-section, .bookings-section {
+    margin-bottom: 30px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .destinations-list {
+    padding: 0;
+  }
+  
+  .destination-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .destination-item:last-child {
+    border-bottom: none;
+  }
+  
+  .bookings-table-container {
+    overflow-x: auto;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-table {
+      font-size: 12px;
+    }
+    .profile-card, .overview-card {
+      padding: 15px;
+    }
+  }
+
 /* Responsive */
 @media screen and (max-width: 768px) {
     .dashboard-cards {

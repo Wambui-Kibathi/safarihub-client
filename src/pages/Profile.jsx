@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getTravelerProfile, updateTravelerProfile } from "../api/travelerApi";
 import ProfilePictureUpload from "../components/ProfilePictureUpload";
 import { useAuth } from "../context/AuthContext";
+import { FaUser, FaSave } from "react-icons/fa";
 import "../styles/form.css";
 
 const Profile = () => {
@@ -31,7 +32,7 @@ const Profile = () => {
 
   return (
     <div className="form-container">
-      <h2>My Profile</h2>
+      <h2><FaUser className="icon" /> My Profile</h2>
       {profile ? (
         <>
           <img
@@ -47,7 +48,7 @@ const Profile = () => {
             value={profile.full_name}
             onChange={handleChange}
           />
-          <button onClick={handleSave}>Save Changes</button>
+          <button onClick={handleSave}><FaSave className="icon-small" /> Save Changes</button>
           {message && <p className="success">{message}</p>}
         </>
       ) : (

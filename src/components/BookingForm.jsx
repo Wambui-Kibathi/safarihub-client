@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { createBooking } from "../api/bookingApi";
 import { initializePayment } from "../api/paymentApi";
 import { useAuth } from "../context/AuthContext";
+import { FaCalendarAlt, FaCreditCard, FaSignInAlt } from "react-icons/fa";
 import "../styles/form.css";
 
 const BookingForm = () => {
@@ -67,10 +68,10 @@ const BookingForm = () => {
   if (!auth || !auth.token) {
     return (
       <div className="form-container">
-        <h2>Book This Destination</h2>
+        <h2><FaCalendarAlt className="icon" /> Book This Destination</h2>
         <p className="error">
           You must be logged in to make a booking.{" "}
-          <Link to="/login">Click here to log in</Link>
+          <Link to="/login"><FaSignInAlt className="icon-small" /> Click here to log in</Link>
         </p>
       </div>
     );
@@ -78,9 +79,9 @@ const BookingForm = () => {
 
   return (
     <div className="form-container">
-      <h2>Book This Destination</h2>
+      <h2><FaCalendarAlt className="icon" /> Book This Destination</h2>
       <form onSubmit={handleBooking}>
-        <label>Start Date:</label>
+        <label><FaCalendarAlt className="icon-small" /> Start Date:</label>
         <input
           type="date"
           name="start_date"
@@ -89,7 +90,7 @@ const BookingForm = () => {
           required
         />
 
-        <label>End Date:</label>
+        <label><FaCalendarAlt className="icon-small" /> End Date:</label>
         <input
           type="date"
           name="end_date"
@@ -99,7 +100,7 @@ const BookingForm = () => {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? "Processing..." : "Book & Pay Now"}
+          <FaCreditCard className="icon-small" /> {loading ? "Processing..." : "Book & Pay Now"}
         </button>
 
         {error && <p className="error">{error}</p>}
