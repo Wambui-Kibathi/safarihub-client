@@ -2,7 +2,7 @@ import { API_BASE_URL } from "./config";
 
 // Traveler profile
 export const getTravelerProfile = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/traveler/profile`, {
+  const res = await fetch(`${API_BASE_URL}/traveler/profile`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -11,7 +11,7 @@ export const getTravelerProfile = async (token) => {
 };
 
 export const updateTravelerProfile = async (payload, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/traveler/profile`, {
+  const res = await fetch(`${API_BASE_URL}/traveler/profile`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export const updateTravelerProfile = async (payload, token) => {
 
 // Traveler bookings
 export const getTravelerBookings = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/traveler/bookings`, {
+  const res = await fetch(`${API_BASE_URL}/traveler/bookings`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();

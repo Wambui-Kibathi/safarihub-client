@@ -2,7 +2,7 @@ import { API_BASE_URL } from "./config";
 
 // Dashboard overview
 export const getAdminDashboard = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/dashboard`, {
+  const res = await fetch(`${API_BASE_URL}/admin/dashboard`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -12,7 +12,7 @@ export const getAdminDashboard = async (token) => {
 
 // Users
 export const getUsers = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/users`, {
+  const res = await fetch(`${API_BASE_URL}/admin/users`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -21,7 +21,7 @@ export const getUsers = async (token) => {
 };
 
 export const updateUser = async (id, payload, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/users/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/admin/users/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export const updateUser = async (id, payload, token) => {
 };
 
 export const deleteUser = async (id, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/users/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/admin/users/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -46,7 +46,7 @@ export const deleteUser = async (id, token) => {
 
 // Bookings
 export const getAllBookings = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/bookings`, {
+  const res = await fetch(`${API_BASE_URL}/admin/bookings`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -55,7 +55,7 @@ export const getAllBookings = async (token) => {
 };
 
 export const deleteBooking = async (id, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/bookings/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/admin/bookings/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -66,7 +66,7 @@ export const deleteBooking = async (id, token) => {
 
 // Destinations
 export const getAllDestinations = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/admin/destinations`, {
+  const res = await fetch(`${API_BASE_URL}/admin/destinations`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();

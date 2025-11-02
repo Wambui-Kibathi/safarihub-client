@@ -3,7 +3,7 @@ import { API_BASE_URL } from "./config";
 // Get all destinations (public)
 export const getDestinations = async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/destinations/`);
+    const res = await fetch(`${API_BASE_URL}/destinations/`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || "Failed to fetch destinations");
     return data;
@@ -16,7 +16,7 @@ export const getDestinations = async () => {
 // Get single destination by ID
 export const getDestinationById = async (id) => {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/destinations/${id}`);
+    const res = await fetch(`${API_BASE_URL}/destinations/${id}`);
     const data = await res.json();
     if (!res.ok) throw new Error(data.message || "Failed to fetch destination");
     return data;
@@ -28,7 +28,7 @@ export const getDestinationById = async (id) => {
 
 // ADMIN - Create destination
 export const createDestination = async (payload, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/destinations/`, {
+  const res = await fetch(`${API_BASE_URL}/destinations/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export const createDestination = async (payload, token) => {
 
 // ADMIN - Update destination
 export const updateDestination = async (id, payload, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/destinations/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/destinations/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export const updateDestination = async (id, payload, token) => {
 
 // ADMIN - Delete destination
 export const deleteDestination = async (id, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/destinations/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/destinations/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });

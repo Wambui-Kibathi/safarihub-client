@@ -2,7 +2,7 @@ import { API_BASE_URL } from "./config";
 
 // Create a new booking
 export const createBooking = async (data, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/bookings/`, {
+  const res = await fetch(`${API_BASE_URL}/bookings/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const createBooking = async (data, token) => {
 
 // Get bookings for a user
 export const getUserBookings = async (userId, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/bookings/user/${userId}`, {
+  const res = await fetch(`${API_BASE_URL}/bookings/user/${userId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -27,7 +27,7 @@ export const getUserBookings = async (userId, token) => {
 
 // Get booking by ID
 export const getBookingById = async (id, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/bookings/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/bookings/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -37,7 +37,7 @@ export const getBookingById = async (id, token) => {
 
 // Update booking
 export const updateBooking = async (id, data, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/bookings/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/bookings/${id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const updateBooking = async (id, data, token) => {
 
 // Delete booking
 export const deleteBooking = async (id, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/bookings/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/bookings/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });

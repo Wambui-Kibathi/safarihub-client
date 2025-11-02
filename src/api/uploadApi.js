@@ -5,7 +5,7 @@ export const uploadProfilePicture = async (token, file) => {
     const formData = new FormData();
     formData.append("image", file);
 
-    const res = await fetch(`${API_BASE_URL}/api/upload/profile`, {
+    const res = await fetch(`${API_BASE_URL}/upload/profile`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -2,7 +2,7 @@ import { API_BASE_URL } from "./config";
 
 // Guide dashboard overview
 export const getGuideDashboard = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/guide/dashboard`, {
+  const res = await fetch(`${API_BASE_URL}/guide/dashboard`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -12,7 +12,7 @@ export const getGuideDashboard = async (token) => {
 
 // Guide profile
 export const getGuideProfile = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/guide/profile`, {
+  const res = await fetch(`${API_BASE_URL}/guide/profile`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -21,7 +21,7 @@ export const getGuideProfile = async (token) => {
 };
 
 export const updateGuideProfile = async (payload, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/guide/profile`, {
+  const res = await fetch(`${API_BASE_URL}/guide/profile`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export const updateGuideProfile = async (payload, token) => {
 
 // Guide destinations
 export const getAssignedDestinations = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/guide/destinations`, {
+  const res = await fetch(`${API_BASE_URL}/guide/destinations`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -46,7 +46,7 @@ export const getAssignedDestinations = async (token) => {
 
 // Guide bookings
 export const getGuideBookings = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/guide/bookings`, {
+  const res = await fetch(`${API_BASE_URL}/guide/bookings`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();

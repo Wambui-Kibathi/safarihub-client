@@ -4,7 +4,7 @@ import { API_BASE_URL } from "./config";
 /** 🔹 Register a new user */
 export const registerUser = async (data) => {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
+    const res = await fetch(`${API_BASE_URL}/auth/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export const registerUser = async (data) => {
 /** 🔹 Login user */
 export const loginUser = async (data) => {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ export const loginUser = async (data) => {
 /** 🔹 Logout user */
 export const logoutUser = async (token) => {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+    const res = await fetch(`${API_BASE_URL}/auth/logout`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ export const logoutUser = async (token) => {
 /** 🔹 Get currently logged-in user */
 export const getCurrentUser = async (token) => {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/auth/me`, {
+    const res = await fetch(`${API_BASE_URL}/auth/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

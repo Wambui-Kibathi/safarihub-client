@@ -2,7 +2,7 @@ import { API_BASE_URL } from "./config";
 
 // Get all payments (Admin only)
 export const getAllPayments = async (token) => {
-  const res = await fetch(`${API_BASE_URL}/api/payments/`, {
+  const res = await fetch(`${API_BASE_URL}/payments/`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -12,7 +12,7 @@ export const getAllPayments = async (token) => {
 
 // Get a single payment
 export const getPayment = async (id, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/payments/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/payments/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -22,7 +22,7 @@ export const getPayment = async (id, token) => {
 
 // Initialize a new payment (returns authorization_url)
 export const initializePayment = async (bookingId, callbackUrl, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/payments/initialize`, {
+  const res = await fetch(`${API_BASE_URL}/payments/initialize`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const initializePayment = async (bookingId, callbackUrl, token) => {
 
 // Verify a payment by reference
 export const verifyPayment = async (reference, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/payments/verify/${reference}`, {
+  const res = await fetch(`${API_BASE_URL}/payments/verify/${reference}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await res.json();
@@ -47,7 +47,7 @@ export const verifyPayment = async (reference, token) => {
 
 // Delete a payment (Admin only)
 export const deletePayment = async (id, token) => {
-  const res = await fetch(`${API_BASE_URL}/api/payments/${id}`, {
+  const res = await fetch(`${API_BASE_URL}/payments/${id}`, {
     method: "DELETE",
     headers: { Authorization: `Bearer ${token}` },
   });
